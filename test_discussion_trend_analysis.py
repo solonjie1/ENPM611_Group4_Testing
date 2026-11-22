@@ -63,7 +63,7 @@ class TestDiscussionTrendAnalysisWhiteBox(unittest.TestCase):
                     self.analysis._count_comments(make_issue(events=events)),
                     expected,
                 )
-    #test for parsing event dates with various date configurations,timezones, and invalid inputs (a character string and a byte string)
+    #test for parsing event dates with various date configurations,timezones, and invalid inputs (a character string, byte string, and invalid integer)
     def test_parse_event_date(self):
         naive_datetime = datetime(2024, 1, 2, 3, 4, 5)
         offset_datetime = datetime(
@@ -87,9 +87,10 @@ class TestDiscussionTrendAnalysisWhiteBox(unittest.TestCase):
             self.analysis._parse_event_date("2024-01-02T03:04:05Z"),
             datetime(2024, 1, 2, 3, 4, 5, tzinfo=timezone.utc),
         )
-        #test of invalid inputs(a character string and a byte string)
+        #test of invalid inputs(a character string, byte string, and invalid integer)
         self.assertIsNone(self.analysis._parse_event_date("not a date"))
         self.assertIsNone(self.analysis._parse_event_date(b"2024-01-02"))
+        self.assertIsNone(self.analysis._parse_event_date(123))
     
     #test for grouping monthly activity using creation and comment and invalid dates
     def test_group_monthly_activity_uses_creation_and_comment_dates(self):
@@ -120,19 +121,56 @@ class TestDiscussionTrendAnalysisWhiteBox(unittest.TestCase):
         self.assertEqual(activity[january], {"issues": 2, "comments": 1})
         self.assertEqual(activity[february], {"issues": 0, "comments": 1})
     
-        """ 
-        Test the categorization of issues based on their number of comments, including boundary values and empty input.
-            Below is the categorization scheme used in the analysis:
-                Categorize issues based on their number of comments.
-        
-                Low (0-2): Represents minimal discussion or interaction.
-                Medium (3-10): Represents a moderate level of discussion.
-                High (>10): Represents extensive discussion that may indicate
-                complex issues or greater contributor involvement.
-        
-                These fixed thresholds provide simple and consistent
-                categories for comparing discussion activity across issues.
-        """
+    #test for grouping monthly activity with None events, ensuring that the function correctly 
+    #handles issues with no events and returns an empty dictionary
+    def test_group_monthly_activity_ignores_none_events(self):
+        issue = make_issue(events=[None])
+
+        self.assertEqual(self.analysis._group_monthly_activity([issue]), {})
+
+    def test_group_monthly_activity_includes_inactive_months_in_trend(self):
+        issues = [
+            make_issue(created_date="2024-01-05T00:00:00Z", events=[])
+            for _ in range(10)
+        ]
+        issues.extend(
+            make_issue(created_date="2024-12-05T00:00:00Z", events=[])
+            for _ in range(10)
+        )
+        issues.append(
+            make_issue(
+                created_date=None,
+                events=[make_event("commented", "2024-06-05T00:00:00Z")],
+            )
+        )
+
+        monthly_activity = self.analysis._group_monthly_activity(issues)
+        expected_months = [
+            datetime(2024, month, 1, tzinfo=timezone.utc)
+            for month in range(1, 13)
+        ]
+
+        with self.subTest("includes inactive calendar months"):
+            self.assertEqual(list(monthly_activity), expected_months)
+        with self.subTest("classifies the full-period trend"):
+            self.assertEqual(
+                self.analysis._describe_trend(monthly_activity, "issues"),
+                "relatively stable",
+            )
+    
+    """ 
+    Test the categorization of issues based on their number of comments, including boundary values and empty input.
+        Below is the categorization scheme used in the analysis:
+            Categorize issues based on their number of comments.
+    
+            Low (0-2): Represents minimal discussion or interaction.
+            Medium (3-10): Represents a moderate level of discussion.
+            High (>10): Represents extensive discussion that may indicate
+            complex issues or greater contributor involvement.
+    
+            These fixed thresholds provide simple and consistent
+            categories for comparing discussion activity across issues.
+    """
     def test_intensity_distribution_boundaries_and_empty_input(self):
         counts = [
             (make_issue(1), 0),
@@ -315,6 +353,11 @@ class TestDiscussionTrendAnalysisWhiteBox(unittest.TestCase):
         self.assertEqual(list(axes.lines[0].get_ydata()), [2, 4])
         self.assertEqual(list(axes.lines[1].get_ydata()), [3, 5])
         self.assertEqual(axes.get_ylabel(), "Number of Activities")
+
+    #test for showing the monthly activity chart with no data, ensuring that the 
+    #function correctly handles the case where there is no data to display and does not raise an error
+    def test_show_monthly_activity_chart_with_no_data(self):
+        self.analysis._show_monthly_activity_chart({})
 
     #test for showing the intensity chart, ensuring that the chart is created with the correct data and labels
     def test_show_intensity_chart(self):
