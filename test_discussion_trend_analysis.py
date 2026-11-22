@@ -122,12 +122,14 @@ class TestDiscussionTrendAnalysisWhiteBox(unittest.TestCase):
         self.assertEqual(activity[february], {"issues": 0, "comments": 1})
     
     #test for grouping monthly activity with None events, ensuring that the function correctly 
-    #handles issues with no events and returns an empty dictionary
+    #handles issues with no events and returns an empty dictionary 
     def test_group_monthly_activity_ignores_none_events(self):
         issue = make_issue(events=[None])
 
         self.assertEqual(self.analysis._group_monthly_activity([issue]), {})
-
+    
+    #test for grouping monthly activity with inactive months, ensuring that the function 
+    #includes all months in the trend analysis, even if there are no issues or comments in those months
     def test_group_monthly_activity_includes_inactive_months_in_trend(self):
         issues = [
             make_issue(created_date="2024-01-05T00:00:00Z", events=[])
@@ -496,9 +498,8 @@ class TestDiscussionTrendAnalysisWhiteBox(unittest.TestCase):
         )
         show.assert_called_once_with(block=True)
 
-    #test for running the analysis when there are no issues, ensuring that the analysis
-    #correctly handles the case where there are no issues to analyze and does not attempt 
-    #to generate charts or display them
+    # Tests the empty-issue path with chart rendering and display mocked, ensuring that the analysis
+    # correctly handles the case where there are no issues to analyze and does not raise an error
     def test_run_handles_no_issues(self):
         with (
             patch(
