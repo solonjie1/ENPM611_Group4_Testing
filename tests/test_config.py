@@ -37,6 +37,7 @@ class ConfigTestCase(unittest.TestCase):
         Writes a config.json into a temporary folder and makes that folder
         (or a subfolder of it) the working directory.
         """
+        original_cwd = os.getcwd()
         folder = tempfile.TemporaryDirectory()
         self.addCleanup(folder.cleanup)
         with open(os.path.join(folder.name, 'config.json'), 'w') as fout:
@@ -46,6 +47,7 @@ class ConfigTestCase(unittest.TestCase):
             workdir = os.path.join(folder.name, subfolder)
             os.makedirs(workdir)
         os.chdir(workdir)
+        self.addCleanup(os.chdir, original_cwd)
         return folder.name
 
 
