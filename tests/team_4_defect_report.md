@@ -54,4 +54,29 @@ Expected result: The chart method handles an empty dataset without raising an ex
 Actual result: The method raises `IndexError: list index out of range`.
 Relevant failure output: `discussion_trend_analysis.py:270` indexes `months[0]` and `months[-1]` while constructing the chart title.
 
+Defect title: Resolution time calculation crashes when one date has a timezone and the other does not
+Affected module or feature: Label Resolution Analysis, Feature 1 (`label_resolution.py`)
+Associated test case: `test_naive_created_date_with_utc_close_date` (`tests/test_label_resolution.py`, class `TestCalculateResolutionTimes`)
+Preconditions or test data: One closed issue labeled `bug` with `created_date` `2024-01-01T00:00:00` (no timezone) and a `closed` event dated `2024-01-03T00:00:00Z` (UTC). `DataLoader` is mocked to return only this issue.
+Steps to reproduce:
+1. Build the issue above with `model.Issue`.
+2. Create a `LabelResolutionAnalysis` instance whose `DataLoader().get_issues()` returns that issue.
+3. Call `calculate_resolution_times()`.
+4. Or run: `python -m unittest tests.test_label_resolution.TestCalculateResolutionTimes.test_naive_created_date_with_utc_close_date`
+Expected result: The method returns `{'bug': [2.0]}` (a 2-day resolution time), because `model.py` provides `_as_utc()` and `Issue.days_to_close()` to normalize both dates to UTC before subtracting.
+Actual result: The method raises `TypeError: can't subtract offset-naive and offset-aware datetimes`, which also stops `run()` (and `python run.py --feature 1`) from producing any report or chart.
+Relevant failure output:
+```
+ERROR: test_naive_created_date_with_utc_close_date (tests.test_label_resolution.TestCalculateResolutionTimes)
+Traceback (most recent call last):
+  File "tests/test_label_resolution.py", line 163, in test_naive_created_date_with_utc_close_date
+    result, _ = quietly(build([issue]).calculate_resolution_times)
+  File "tests/test_label_resolution.py", line 45, in quietly
+    result = func(*args)
+  File "label_resolution.py", line 63, in calculate_resolution_times
+    close_date - issue.created_date
+TypeError: can't subtract offset-naive and offset-aware datetimes
+```
+`label_resolution.py:62-64` subtracts `issue.created_date` from the closing date directly instead of using `_as_utc()` or `Issue.days_to_close()` from `model.py`.
+
 
