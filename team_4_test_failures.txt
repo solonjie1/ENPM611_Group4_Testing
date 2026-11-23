@@ -1,0 +1,142 @@
+...............F............................../Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2010: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.space          = oneOf(self._space_widths)("space")
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2012: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.style_literal  = oneOf(
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2015: PyparsingDeprecationWarning: 'leaveWhitespace' deprecated - use 'leave_whitespace'
+  p.symbol         = Regex(
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2024: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.start_group    = Optional(r"\math" + oneOf(self._fontnames)("font")) + "{"
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2027: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.delim          = oneOf(self._delims)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:1984: PyparsingDeprecationWarning: 'setName' deprecated - use 'set_name'
+  val.setName(key)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:1987: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+  val.setParseAction(getattr(self, key))
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:1748: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+  return Empty().setParseAction(raise_error)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2088: PyparsingDeprecationWarning: 'endQuoteChar' argument is deprecated, use 'end_quote_char'
+  p.text = cmd(r"\text", QuotedString('{', '\\', endQuoteChar="}"))
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2097: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  + OneOrMore(oneOf(["_", "^"]) - p.placeable)("subsuper")
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2146: PyparsingDeprecationWarning: 'unquoteResults' argument is deprecated, use 'unquote_results'
+  p.math_string   = QuotedString('$', '\\', unquoteResults=False)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2147: PyparsingDeprecationWarning: 'leaveWhitespace' deprecated - use 'leave_whitespace'
+  p.non_math      = Regex(r"(?:(?:\\[$])|[^$])*").leaveWhitespace()
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2170: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  result = self._expression.parseString(s)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2197: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  return self._math_expression.parseString(toks[0][1:-1], parseAll=True)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/pyparsing/util.py:466: PyparsingDeprecationWarning: 'parseAll' argument is deprecated, use 'parse_all'
+  return fn(self, *args, **kwargs)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2178: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  ParserElement.resetCache()
+.../Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+./Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+...../Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+.../Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+...............F../Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2170: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  result = self._expression.parseString(s)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2197: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  return self._math_expression.parseString(toks[0][1:-1], parseAll=True)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/pyparsing/util.py:466: PyparsingDeprecationWarning: 'parseAll' argument is deprecated, use 'parse_all'
+  return fn(self, *args, **kwargs)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2178: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  ParserElement.resetCache()
+./Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2170: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  result = self._expression.parseString(s)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2197: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  return self._math_expression.parseString(toks[0][1:-1], parseAll=True)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/pyparsing/util.py:466: PyparsingDeprecationWarning: 'parseAll' argument is deprecated, use 'parse_all'
+  return fn(self, *args, **kwargs)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2178: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  ParserElement.resetCache()
+./Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/numpy/lib/_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2170: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  result = self._expression.parseString(s)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2197: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  return self._math_expression.parseString(toks[0][1:-1], parseAll=True)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/pyparsing/util.py:466: PyparsingDeprecationWarning: 'parseAll' argument is deprecated, use 'parse_all'
+  return fn(self, *args, **kwargs)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2178: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  ParserElement.resetCache()
+./Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2170: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  result = self._expression.parseString(s)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2197: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  return self._math_expression.parseString(toks[0][1:-1], parseAll=True)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/pyparsing/util.py:466: PyparsingDeprecationWarning: 'parseAll' argument is deprecated, use 'parse_all'
+  return fn(self, *args, **kwargs)
+/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/.venv/lib/python3.9/site-packages/matplotlib/_mathtext.py:2178: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  ParserElement.resetCache()
+........F.......................E........................................F...
+======================================================================
+ERROR: test_naive_created_date_with_utc_close_date (tests.test_label_resolution.TestCalculateResolutionTimes)
+model.py provides _as_utc() so that naive and timezone-aware dates can
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/tests/test_label_resolution.py", line 176, in test_naive_created_date_with_utc_close_date
+    result, _ = quietly(build([issue]).calculate_resolution_times)
+  File "/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/tests/test_label_resolution.py", line 58, in quietly
+    result = func(*args)
+  File "/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/label_resolution.py", line 63, in calculate_resolution_times
+    close_date - issue.created_date
+TypeError: can't subtract offset-naive and offset-aware datetimes
+
+======================================================================
+FAIL: test_missing_parameter_returns_falsy_default (tests.test_config.TestGetParameter)
+DEFECT: a default of 0, False or '' is dropped and None is returned,
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/tests/test_config.py", line 122, in test_missing_parameter_returns_falsy_default
+    self.assertEqual(config.get_parameter('DOES_NOT_EXIST', default=0), 0)
+AssertionError: None != 0
+
+======================================================================
+FAIL: test_missing_data_file_gives_a_message_instead_of_a_crash (tests.test_contributor_activity_analysis.TestRun)
+DEFECT: the README says "If the path is missing or wrong, the
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/tests/test_contributor_activity_analysis.py", line 650, in test_missing_data_file_gives_a_message_instead_of_a_crash
+    self.assertIsNone(crash, 'run() crashed with an uncaught FileNotFoundError')
+AssertionError: FileNotFoundError("Data file not found: 'no/such/file.json'. Set ENPM611_PROJECT_DATA_PATH (environment variable or config.json) to the path of the issues JSON file.") is not None : run() crashed with an uncaught FileNotFoundError
+
+======================================================================
+FAIL: test_user_called_null_is_treated_as_a_user_name (tests.test_contributor_activity_analysis.TestUserParameter)
+DEFECT: `--user null` is silently ignored and the project-wide view is
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/tests/test_contributor_activity_analysis.py", line 171, in test_user_called_null_is_treated_as_a_user_name
+    self.assertEqual(self.analysis('null').USER, 'null')
+AssertionError: None != 'null'
+
+======================================================================
+FAIL: test_issue_without_state_can_still_be_loaded (tests.test_model.TestIssue)
+DEFECT: a record with no 'state' crashes with KeyError(None), although
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/solomonnjie/Projects/enpm611-team1-poetry-analyzer/tests/test_model.py", line 160, in test_issue_without_state_can_still_be_loaded
+    self.assertIsNone(crash, 'Issue without a state raised a KeyError instead of loading')
+AssertionError: KeyError(None) is not None : Issue without a state raised a KeyError instead of loading
+
+----------------------------------------------------------------------
+Ran 156 tests in 0.563s
+
+FAILED (failures=4, errors=1)
