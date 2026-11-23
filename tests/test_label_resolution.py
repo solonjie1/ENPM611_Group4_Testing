@@ -1,16 +1,3 @@
-"""
-Unit tests for label_resolution.py (Team 1 feature 1, tested by Team 4).
-
-White-box tests for every method of LabelResolutionAnalysis:
-  * get_resolution_date: every branch of the closing-event filter,
-  * calculate_resolution_times: open / missing-date / no-close /
-    negative-duration / bad-label branches and the printed counts,
-  * run(): the "no data" and "no label with 5 issues" early exits and the
-    full report + bar chart (no chart window is ever opened).
-
-All issues are built in memory, so the real Poetry data file is not needed.
-"""
-
 import contextlib
 import io
 import unittest
