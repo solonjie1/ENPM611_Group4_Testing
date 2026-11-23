@@ -79,4 +79,82 @@ TypeError: can't subtract offset-naive and offset-aware datetimes
 ```
 `label_resolution.py:62-64` subtracts `issue.created_date` from the closing date directly instead of using `_as_utc()` or `Issue.days_to_close()` from `model.py`.
 
+Defect title: A falsy default value passed to `get_parameter` is ignored
+Affected module or feature: Configuration (`config.py`)
+Associated test case: `test_missing_parameter_returns_falsy_default` (`tests/test_config.py`, class `TestGetParameter`)
+Preconditions or test data: A parameter name that is neither an environment variable nor in `config.json` (`DOES_NOT_EXIST`), and the defaults `0`, `False`, and `''`.
+Steps to reproduce:
+1. Call `config.get_parameter('DOES_NOT_EXIST', default=0)`.
+2. Repeat with `default=False` and `default=''`.
+3. Or run: `python -m unittest tests.test_config.TestGetParameter.test_missing_parameter_returns_falsy_default`
+Expected result: The supplied default is returned (`0`, `False`, `''`).
+Actual result: `None` is returned for each of these defaults.
+Relevant failure output:
+```
+FAIL: test_missing_parameter_returns_falsy_default (tests.test_config.TestGetParameter)
+Traceback (most recent call last):
+  File "tests/test_config.py", line 122, in test_missing_parameter_returns_falsy_default
+    self.assertEqual(config.get_parameter('DOES_NOT_EXIST', default=0), 0)
+AssertionError: None != 0
+```
+`config.py:64` checks `if default:` instead of `if default is not None:`, so any falsy default falls through to `return None`.
 
+Defect title: Loading an issue with no `state` field crashes with `KeyError`
+Affected module or feature: Data model (`model.py`, `Issue.from_json`)
+Associated test case: `test_issue_without_state_can_still_be_loaded` (`tests/test_model.py`, class `TestIssue`)
+Preconditions or test data: A valid issue JSON record (number `7`, state `closed`, dates, labels, etc.) with the `state` key removed.
+Steps to reproduce:
+1. Build the issue record and delete its `state` key.
+2. Call `Issue(record)`.
+3. Or run: `python -m unittest tests.test_model.TestIssue.test_issue_without_state_can_still_be_loaded`
+Expected result: The issue loads with `state` set to `None`, the same way a missing number or date is tolerated, and the other fields (e.g. `number == 7`) are still read.
+Actual result: `Issue(record)` raises `KeyError(None)`. Because `DataLoader` builds every issue this way, one incomplete record makes the whole data file unloadable.
+Relevant failure output:
+```
+FAIL: test_issue_without_state_can_still_be_loaded (tests.test_model.TestIssue)
+Traceback (most recent call last):
+  File "tests/test_model.py", line 160, in test_issue_without_state_can_still_be_loaded
+    self.assertIsNone(crash, 'Issue without a state raised a KeyError instead of loading')
+AssertionError: KeyError(None) is not None : Issue without a state raised a KeyError instead of loading
+```
+`model.py:86` runs `State[jobj.get('state')]` without checking for a missing value, so `State[None]` raises `KeyError`.
+
+Defect title: Feature 2 crashes with an uncaught `FileNotFoundError` when the data file path is wrong
+Affected module or feature: Contributor Activity Analysis, Feature 2 (`contributor_activity_analysis.py`)
+Associated test case: `test_missing_data_file_gives_a_message_instead_of_a_crash` (`tests/test_contributor_activity_analysis.py`, class `TestRun`)
+Preconditions or test data: `ENPM611_PROJECT_DATA_PATH` set to a file that does not exist (`no/such/file.json`) and no issues cached in `data_loader`.
+Steps to reproduce:
+1. Set `ENPM611_PROJECT_DATA_PATH=no/such/file.json`.
+2. Create a `ContributorActivityAnalysis` instance and call `run()` (equivalent to `python run.py --feature 2`).
+3. Or run: `python -m unittest tests.test_contributor_activity_analysis.TestRun.test_missing_data_file_gives_a_message_instead_of_a_crash`
+Expected result: As the README states ("If the path is missing or wrong, the application prints a clear error message instead of crashing"), `run()` prints the error message and returns without raising.
+Actual result: `run()` raises an uncaught `FileNotFoundError`, ending the program with a stack trace.
+Relevant failure output:
+```
+FAIL: test_missing_data_file_gives_a_message_instead_of_a_crash (tests.test_contributor_activity_analysis.TestRun)
+Traceback (most recent call last):
+  File "tests/test_contributor_activity_analysis.py", line 650, in test_missing_data_file_gives_a_message_instead_of_a_crash
+    self.assertIsNone(crash, 'run() crashed with an uncaught FileNotFoundError')
+AssertionError: FileNotFoundError("Data file not found: 'no/such/file.json'. Set ENPM611_PROJECT_DATA_PATH (environment variable or config.json) to the path of the issues JSON file.") is not None : run() crashed with an uncaught FileNotFoundError
+```
+`DataLoader._load()` builds a clear message, but raises it as an exception that `run()` never catches, so the user sees a stack trace instead of the message the README promises.
+
+Defect title: `--user null` is silently ignored and the project-wide view is shown
+Affected module or feature: Contributor Activity Analysis, Feature 2 (`contributor_activity_analysis.py`, via `config.py`)
+Associated test case: `test_user_called_null_is_treated_as_a_user_name` (`tests/test_contributor_activity_analysis.py`, class `TestUserParameter`)
+Preconditions or test data: The `user` parameter set to the text `null` (as `python run.py --feature 2 --user null` does).
+Steps to reproduce:
+1. Call `config.set_parameter('user', 'null')`.
+2. Create a `ContributorActivityAnalysis` instance and read its `USER` attribute.
+3. Or run: `python -m unittest tests.test_contributor_activity_analysis.TestUserParameter.test_user_called_null_is_treated_as_a_user_name`
+Expected result: `USER == 'null'`, so the name is looked up like any other user (and reported as not found if it has no activity).
+Actual result: `USER` is `None`, so the analysis silently shows the project-wide view instead of the requested user.
+Relevant failure output:
+```
+FAIL: test_user_called_null_is_treated_as_a_user_name (tests.test_contributor_activity_analysis.TestUserParameter)
+Traceback (most recent call last):
+  File "tests/test_contributor_activity_analysis.py", line 171, in test_user_called_null_is_treated_as_a_user_name
+    self.assertEqual(self.analysis('null').USER, 'null')
+AssertionError: None != 'null'
+```
+`config.get_parameter` passes the value through `convert_to_typed_value`, which runs `json.loads('null')` and turns the text into `None`; `contributor_activity_analysis.py:49-50` then treats it as "no user given".
