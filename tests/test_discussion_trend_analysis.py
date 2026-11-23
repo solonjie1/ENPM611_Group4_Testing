@@ -531,7 +531,7 @@ class TestDiscussionTrendAnalysisWhiteBox(unittest.TestCase):
             contextlib.redirect_stdout(output),
         ):
             runpy.run_path(
-                str(Path(__file__).with_name("discussion_trend_analysis.py")),
+                str(Path(__file__).resolve().parent.parent / "discussion_trend_analysis.py"),
                 run_name="__main__",
             )
 
